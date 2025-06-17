@@ -1,26 +1,19 @@
 "use client"
 
 import { Shield, AlertTriangle, CheckCircle, XCircle, Mail, Globe } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
+import { Badge } from "../components/ui/badge"
+import { Progress } from "../components/ui/progress"
+import PropTypes from 'prop-types'
 
-interface ScoreCardProps {
-  type: "email" | "url"
-  target: string
-  score: number
-  status: "Secure" | "Moderate" | "High Risk"
-  threats: string[]
-}
-
-export default function ScoreCard({ type, target, score, status, threats }: ScoreCardProps) {
-  const getScoreColor = (score: number) => {
+export default function ScoreCard({ type, target, score, status, threats }) {
+  const getScoreColor = (score) => {
     if (score >= 80) return "text-green-400"
     if (score >= 50) return "text-yellow-400"
     return "text-red-400"
   }
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status) => {
     switch (status) {
       case "Secure":
         return "bg-green-600/20 text-green-400 border-green-600/30"
@@ -33,7 +26,7 @@ export default function ScoreCard({ type, target, score, status, threats }: Scor
     }
   }
 
-  const getStatusIcon = (status: string) => {
+  const getStatusIcon = (status) => {
     switch (status) {
       case "Secure":
         return <CheckCircle className="h-4 w-4" />
@@ -46,7 +39,7 @@ export default function ScoreCard({ type, target, score, status, threats }: Scor
     }
   }
 
-  const getProgressColor = (score: number) => {
+  const getProgressColor = (score) => {
     if (score >= 80) return "bg-green-500"
     if (score >= 50) return "bg-yellow-500"
     return "bg-red-500"
@@ -125,4 +118,12 @@ export default function ScoreCard({ type, target, score, status, threats }: Scor
       </CardContent>
     </Card>
   )
+}
+
+ScoreCard.propTypes = {
+  type: PropTypes.oneOf(['email', 'url']).isRequired,
+  target: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  status: PropTypes.oneOf(['Secure', 'Moderate', 'High Risk']).isRequired,
+  threats: PropTypes.arrayOf(PropTypes.string).isRequired
 }

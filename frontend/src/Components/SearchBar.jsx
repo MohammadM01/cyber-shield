@@ -1,12 +1,10 @@
 "use client"
 
-import type React from "react"
-
-import { useState } from "react"
+import React, { useState } from "react"
 import { Search, Mail, Globe, Shield } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from "./ui/button"
+import { Input } from "./ui/input"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 
 export default function SearchBar() {
   const [searchType, setSearchType] = useState("email")
@@ -25,7 +23,7 @@ export default function SearchBar() {
     }, 2000)
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleSearch()
     }

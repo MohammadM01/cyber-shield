@@ -1,20 +1,12 @@
 "use client"
 
 import { Check, Star } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
+import { Button } from "./ui/button"
+import { Badge } from "./ui/badge"
+import PropTypes from 'prop-types'
 
-interface PricingCardProps {
-  tier: string
-  price: string
-  period: string
-  features: string[]
-  buttonText: string
-  popular?: boolean
-}
-
-export default function PricingCard({ tier, price, period, features, buttonText, popular = false }: PricingCardProps) {
+export default function PricingCard({ tier, price, period, features, buttonText, popular = false }) {
   return (
     <Card
       className={`relative bg-slate-800/50 border-slate-700 backdrop-blur-sm hover:bg-slate-800/70 transition-all duration-300 ${
@@ -66,4 +58,13 @@ export default function PricingCard({ tier, price, period, features, buttonText,
       </CardContent>
     </Card>
   )
+}
+
+PricingCard.propTypes = {
+  tier: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
+  period: PropTypes.string.isRequired,
+  features: PropTypes.arrayOf(PropTypes.string).isRequired,
+  buttonText: PropTypes.string.isRequired,
+  popular: PropTypes.bool
 }
