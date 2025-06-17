@@ -1,22 +1,15 @@
-from dork_scanner import run_dork_scan
-from security_apis import run_api_checks
-from scoring import calculate_score
-from report_generator import generate_pdf_report
+import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
+from api import app
+from config.config import config
 
-def main():
-    target = input("Enter website URL or email: ").strip()
-    print("\n[1] Running Google Dorking...")
-    dork_results = run_dork_scan(target)
-
-    print("\n[2] Checking external APIs...")
-    api_results = run_api_checks(target)
-
-    print("\n[3] Calculating security score...")
-    score = calculate_score(dork_results, api_results)
-
-    print(f"\nSecurity Score: {score}/100")
-    generate_pdf_report(target, dork_results, api_results, score)
-    print("\nReport saved as 'report.pdf'")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[config.CORS_ORIGIN],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 if __name__ == "__main__":
-    main()
+    uvicorn.run(app, host="0.0.0.0", port=config.BACKEND_PORT)
